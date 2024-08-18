@@ -37,6 +37,14 @@ Example usage of the python script on unix based systems:
 
 ```console
 $ ./pyusbtool.py FRCSoftware<YEAR>.csv /path/to/drive/ --download
+$ ./pyusbtool.py FTCSoftware<YEAR>.csv /path/to/drive/ --download
+```
+
+Example usage of the powershell script on windows/unix based systems:
+
+```console
+$ ./pshusbtool.ps1 -csvFileURL https://raw.githubusercontent.com/JamieSinn/CSA-USB-Tool/main/FTCSoftware<YEAR>.csv -csvFilePath /Users/username/CSA/FTC<YEAR>/
+$ ./pshusbtool.ps1 -csvFileURL https://raw.githubusercontent.com/JamieSinn/CSA-USB-Tool/main/FRCSoftware<YEAR>.csv -csvFilePath /Users/username/CSA/FRC<YEAR>/
 ```
 
 ### PreRequisites
