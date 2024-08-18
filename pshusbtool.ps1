@@ -1,15 +1,28 @@
 [CmdletBinding()]
 param(
-	[Parameter(Position = 0, Mandatory = $true)][string]$csvFileURL,
-	[Parameter(Position = 1, Mandatory = $true)][string]$csvFilePath
+	[Parameter(Position = 0, Mandatory = $true)][string]$csvFile,
+	[Parameter(Position = 1, Mandatory = $true)][string]$csvFilePath,
+	[Parameter(Position = 2, Mandatory = $false)][string]$csvFileURL
 )
 
 $StartTime = $(get-date)
 $datetime = $(get-date -f yyyy-MM-dd_hh.mm.ss)
 Start-Transcript -path "$($csvFilePath)/log_$($datetime).txt"
  
-# ./pshusbtool.ps1 -csvFileURL https://raw.githubusercontent.com/JamieSinn/CSA-USB-Tool/main/FTCSoftware2023.csv -csvFilePath /Users/dkittell/CSA/FTC2023/
-# ./pshusbtool.ps1 -csvFileURL https://raw.githubusercontent.com/JamieSinn/CSA-USB-Tool/main/FRCSoftware2024.csv -csvFilePath /Users/dkittell/CSA/FRC2024/
+# ./pshusbtool.ps1 -csvFile FTCSoftware2023.csv -csvFilePath /Users/dkittell/CSA/FTC2023/
+# ./pshusbtool.ps1 -csvFile FTCSoftware2023.csv -csvFilePath /Users/dkittell/CSA/FTC2023/ -csvFileURL https://raw.githubusercontent.com/dkittell/CSA-USB-Tool/main/
+
+# ./pshusbtool.ps1 -csvFile FRCSoftware2024.csv -csvFilePath /Users/dkittell/CSA/FRC2024/
+# ./pshusbtool.ps1 -csvFile FRCSoftware2024.csv -csvFilePath /Users/dkittell/CSA/FRC2024/ -csvFileURL https://raw.githubusercontent.com/dkittell/CSA-USB-Tool/main/
+
+if ([string]::IsNullOrWhiteSpace($csvFileURL)) {
+	$csvFileURL = "https://raw.githubusercontent.com/dkittell/CSA-USB-Tool/main"
+}
+else {
+	$csvFileURL = $csvFileURL.TrimEnd('/')
+}
+
+$csvFileURL = "$($csvFileURL)/$($csvFile)"
 
 #region Functions
 function md5hash() {
@@ -120,7 +133,16 @@ $csvList = Import-Csv -Path "$($csvFilePath)/$($csvFile)" -Header 'FriendlyName'
 #region Use the CSV and download the files
 $csvList | Sort-Object 'FriendlyName' | Foreach-Object {
 	Write-Output "`r`n$(Get-Date) - $($_.FriendlyName)"
-	$localPath = "$($csvFilePath)/$($_.FileName)"
+
+	if ($_.Category) {
+
+		$localPath = "$($csvFilePath)/$($_.Category)/$($_.FileName)"
+	}
+	else {
+		$localPath = "$($csvFilePath)/$($_.FileName)"
+	}
+
+	
 	if (!(Test-Path $localPath)) {
 		# File doesn't exist, simply download
 		Write-Output "$(Get-Date) - File ($localPath) does not exist, simply downloading $($_.URL)"		
