@@ -5,26 +5,36 @@ param(
 	[Parameter(Position = 2, Mandatory = $false)][string]$csvFileURL
 )
 
-$StartTime = $(get-date)
-$datetime = $(get-date -f yyyy-MM-dd_hh.mm.ss)
-Start-Transcript -path "$($csvFilePath)/log_$($datetime).txt"
- 
-# ./pshusbtool.ps1 -csvFile FTCSoftware2023.csv -csvFilePath /Users/dkittell/CSA/FTC2023/
-# ./pshusbtool.ps1 -csvFile FTCSoftware2023.csv -csvFilePath /Users/dkittell/CSA/FTC2023/ -csvFileURL https://raw.githubusercontent.com/dkittell/CSA-USB-Tool/main/
-
-# ./pshusbtool.ps1 -csvFile FRCSoftware2024.csv -csvFilePath /Users/dkittell/CSA/FRC2024/
-# ./pshusbtool.ps1 -csvFile FRCSoftware2024.csv -csvFilePath /Users/dkittell/CSA/FRC2024/ -csvFileURL https://raw.githubusercontent.com/dkittell/CSA-USB-Tool/main/
-
-if ([string]::IsNullOrWhiteSpace($csvFileURL)) {
-	$csvFileURL = "https://raw.githubusercontent.com/dkittell/CSA-USB-Tool/main"
-}
-else {
-	$csvFileURL = $csvFileURL.TrimEnd('/')
-}
-
-$csvFileURL = "$($csvFileURL)/$($csvFile)"
 
 #region Functions
+function Start-ScriptTimer {
+	$ScriptTimerStartTime = $(get-date)
+	return $ScriptTimerStartTime
+}
+ 
+function Format-TimeSpan {
+	PARAM (
+		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+		[TimeSpan]$TimeSpan
+	)
+ 
+	#Current implementation doesn't handle days.
+ 
+	#By including the delimiters in the formatting string it's easier when we concatenate in the end
+	$hours = $TimeSpan.Hours.ToString("00")
+	$minutes = $TimeSpan.Minutes.ToString("\00")
+	$seconds = $TimeSpan.Seconds.ToString("\00")
+	$milliseconds = $TimeSpan.Milliseconds.ToString("\000")
+ 
+	Write-Output ($hours + " hours " + $minutes + " minutes " + $seconds + " seconds " + $milliseconds + " milliseconds")
+}
+ 
+function Stop-ScriptTimer ([DateTime] $ScriptTimerStartTime) {
+	$ScriptTimerElapsedTime = $(get-date) - $ScriptTimerStartTime
+	$ScriptTimerTotalTime = Format-TimeSpan $ScriptTimerElapsedTime.Ticks
+	Write-Output "Script completed in $ScriptTimerTotalTime" | Out-String
+}
+
 function md5hash() {
 	param(
 		[Parameter(Mandatory = $true)][string]$path
@@ -45,11 +55,20 @@ function DownloadFile() {
 		[Parameter(Mandatory = $true)][string]$WebURL,
 		[Parameter(Mandatory = $true)][string]$FileDirectory,
 		[Parameter(Mandatory = $false)][string]$MD5,
-		[Parameter(Mandatory = $false)][string]$AltName
+		[Parameter(Mandatory = $false)][string]$AltName,
+		[Parameter(Mandatory = $false)][string]$Category
 	)
+
+	if ($Category) {
+		$localPath = "$($FileDirectory)/$($Category)"
+	}
+	else {
+		$localPath = "$($FileDirectory)"
+	}
+
 	# If directory doesn't exist create the directory
-	if ((Test-Path $FileDirectory) -eq 0) {
-		New-Item $FileDirectory -ItemType Directory -Force		
+	if ((Test-Path $localPath) -eq 0) {
+		New-Item $localPath -ItemType Directory -Force		
 	}
 	if (!$AltName) {
 		$FileName = [System.IO.Path]::GetFileName($WebURL)
@@ -58,7 +77,7 @@ function DownloadFile() {
 		$FileName = $AltName
 	}
 	# Concatenate the two values to prepare the download
-	$FullFilePath = "$($FileDirectory)/$($FileName)"  
+	$FullFilePath = "$($localPath)/$($FileName)"  
 	try {
 		$uri = New-Object "System.Uri" "$WebURL"
 		$request = [System.Net.HttpWebRequest]::Create($uri)
@@ -85,13 +104,12 @@ function DownloadFile() {
 	}
 	catch {
 		Write-Output "$(Get-Date) - Download had a problem with $WebURL"
-		Write-Output "$(Get-Date) - Download had a problem with $WebURL" | Out-File -Append -FilePath "$($FileDirectory)/log__$($datetime)_FailedDownloads.txt"
-
+		Write-Output "$(Get-Date) - Download had a problem with $WebURL" | Out-File -Append -FilePath "$($FileDirectory)/log_$($datetime)_FailedDownloads.txt"
 	}
 	# Check MD5
 	if (($MD5)) {
 		# MD5 Provided, check the MD5 of the file.
-		if (!(Test-Path $FullFilePath)) {
+		if (!(Test-Path $localPath)) {
 			# File does not exist on system no need to check MD5
 			Write-Output "$(Get-Date) - Unable to check MD5 as file does not exist." 
 		}
@@ -122,11 +140,30 @@ function DownloadFile() {
 }
 #endregion Functions
 
+$ScriptTimerStartTime = Start-ScriptTimer
+$datetime = $(get-date -f yyyy-MM-dd_hh.mm.ss)
+Start-Transcript -path "$($csvFilePath)/log_$($datetime).txt"
+ 
+# ./pshusbtool.ps1 -csvFile FTCSoftware2023.csv -csvFilePath /Users/dkittell/CSA/FTC2023/
+# ./pshusbtool.ps1 -csvFile FTCSoftware2023.csv -csvFilePath /Users/dkittell/CSA/FTC2023/ -csvFileURL https://raw.githubusercontent.com/dkittell/CSA-USB-Tool/main/
+
+# ./pshusbtool.ps1 -csvFile FRCSoftware2024.csv -csvFilePath /Users/dkittell/CSA/FRC2024/
+# ./pshusbtool.ps1 -csvFile FRCSoftware2024.csv -csvFilePath /Users/dkittell/CSA/FRC2024/ -csvFileURL https://raw.githubusercontent.com/dkittell/CSA-USB-Tool/main/
+
+if ([string]::IsNullOrWhiteSpace($csvFileURL)) {
+	$csvFileURL = "https://raw.githubusercontent.com/dkittell/CSA-USB-Tool/main"
+}
+else {
+	$csvFileURL = $csvFileURL.TrimEnd('/')
+}
+
+$csvFileURL = "$($csvFileURL)/$($csvFile)"
+
 #region Download CSV File
 $csvFile = [System.IO.Path]::GetFileName($csvFileURL)
 $csvFilePath = $csvFilePath.TrimEnd('/')
 DownloadFile -WebURL $csvFileURL -FileDirectory $csvFilePath
-$csvList = Import-Csv -Path "$($csvFilePath)/$($csvFile)" -Header 'FriendlyName', 'FileName', 'URL', 'MD5', 'isZipped','Category'
+$csvList = Import-Csv -Path "$($csvFilePath)/$($csvFile)" -Header 'FriendlyName', 'FileName', 'URL', 'MD5', 'isZipped', 'Category'
 # $csvList | Format-Table -AutoSize
 #endregion Download CSV File
 
@@ -135,7 +172,6 @@ $csvList | Sort-Object 'FriendlyName' | Foreach-Object {
 	Write-Output "`r`n$(Get-Date) - $($_.FriendlyName)"
 
 	if ($_.Category) {
-
 		$localPath = "$($csvFilePath)/$($_.Category)/$($_.FileName)"
 	}
 	else {
@@ -146,7 +182,15 @@ $csvList | Sort-Object 'FriendlyName' | Foreach-Object {
 	if (!(Test-Path $localPath)) {
 		# File doesn't exist, simply download
 		Write-Output "$(Get-Date) - File ($localPath) does not exist, simply downloading $($_.URL)"		
-		DownloadFile -WebURL $_.URL -FileDirectory $csvFilePath -MD5 $_.MD5 -AltName $_.FileName
+		
+
+		if ($_.Category) {
+			DownloadFile -WebURL $_.URL -FileDirectory $csvFilePath -MD5 $_.MD5 -AltName $_.FileName -Category $_.Category
+		}
+		else {
+			DownloadFile -WebURL $_.URL -FileDirectory $csvFilePath -MD5 $_.MD5 -AltName $_.FileName
+		}
+
 	}
 	else {		
 		# File exists, check MD5
@@ -166,14 +210,18 @@ $csvList | Sort-Object 'FriendlyName' | Foreach-Object {
 			catch {
 				Write-Output "$(Get-Date) - MD5 Incorrect, unable to remove" 
 			}
-			DownloadFile -WebURL $_.URL -FileDirectory $csvFilePath -MD5 $_.MD5 -AltName $_.FileName
+			
+			if ($_.Category) {
+				DownloadFile -WebURL $_.URL -FileDirectory $csvFilePath -MD5 $_.MD5 -AltName $_.FileName -Category $_.Category
+			}
+			else {
+				DownloadFile -WebURL $_.URL -FileDirectory $csvFilePath -MD5 $_.MD5 -AltName $_.FileName
+			}
+
 		}
 	}
 }
 #endregion Use the CSV and download the files
-
-$elapsedTime = $(get-date) - $StartTime
-$totalTime = "{0:HH:mm:ss}" -f ([datetime]$elapsedTime.Ticks)
-Write-Output "Process Execution Time: $totalTime" | Out-String
+Stop-ScriptTimer $ScriptTimerStartTime
 
 Stop-Transcript
