@@ -126,7 +126,7 @@ function DownloadFile() {
 $csvFile = [System.IO.Path]::GetFileName($csvFileURL)
 $csvFilePath = $csvFilePath.TrimEnd('/')
 DownloadFile -WebURL $csvFileURL -FileDirectory $csvFilePath
-$csvList = Import-Csv -Path "$($csvFilePath)/$($csvFile)" -Header 'FriendlyName', 'FileName', 'URL', 'MD5', 'isZipped'
+$csvList = Import-Csv -Path "$($csvFilePath)/$($csvFile)" -Header 'FriendlyName', 'FileName', 'URL', 'MD5', 'isZipped','Category'
 # $csvList | Format-Table -AutoSize
 #endregion Download CSV File
 
