@@ -43,8 +43,11 @@ $ ./pyusbtool.py FTCSoftware<YEAR>.csv /path/to/drive/ --download
 Example usage of the powershell script on windows/unix based systems:
 
 ```console
-$ ./pshusbtool.ps1 -csvFileURL https://raw.githubusercontent.com/JamieSinn/CSA-USB-Tool/main/FTCSoftware<YEAR>.csv -csvFilePath /Users/username/CSA/FTC<YEAR>/
-$ ./pshusbtool.ps1 -csvFileURL https://raw.githubusercontent.com/JamieSinn/CSA-USB-Tool/main/FRCSoftware<YEAR>.csv -csvFilePath /Users/username/CSA/FRC<YEAR>/
+# ./pshusbtool.ps1 -csvFile FTCSoftware<YEAR>.csv -csvFilePath /Users/username/CSA/FTC<YEAR>/
+# ./pshusbtool.ps1 -csvFile FTCSoftware<YEAR>.csv -csvFilePath /Users/username/CSA/FTC<YEAR>/ -csvFileURL https://raw.githubusercontent.com/dkittell/CSA-USB-Tool/main/
+
+# ./pshusbtool.ps1 -csvFile FRCSoftware<YEAR>.csv -csvFilePath /Users/username/CSA/FRC<YEAR>/
+# ./pshusbtool.ps1 -csvFile FRCSoftware<YEAR>.csv -csvFilePath /Users/username/CSA/FRC<YEAR>/ -csvFileURL https://raw.githubusercontent.com/dkittell/CSA-USB-Tool/main/
 ```
 
 ### PreRequisites
