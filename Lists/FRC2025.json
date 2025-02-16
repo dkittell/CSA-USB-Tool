@@ -1,0 +1,206 @@
+{
+  "Year": 2025,
+  "Program": "FRC",
+  "Software": [
+    {
+      "Name": "Home",
+      "Description": "Select your desired pre-selected software list",
+      "Tags": [
+        "Home"
+      ],
+      "FileName": null,
+      "Uri": "https://github.com",
+      "Hash": null,
+      "Platform": null
+    },
+    {
+      "Name": "NI Game Tools",
+      "Description": "Game Tools for FRC - DriverStation",
+      "Tags": [
+        "Team",
+        "Event",
+        "FTA",
+        "CSA"
+      ],
+      "FileName": "ni-frc-2025-game-tools_25.0.1_offline.iso",
+      "Uri": "https://download.ni.com/support/nipkg/products/ni-f/ni-frc-2025-game-tools/25.0/offline/ni-frc-2025-game-tools_25.0.1_offline.iso",
+      "Hash": "7fd3f9fef61449f8e263c61ed9f2be6a",
+      "Platform": "Windows"
+    },
+    {
+      "Name": "NI LabVIEW",
+      "Description": "NI LabVIEW Base",
+      "Tags": [
+        "Team",
+        "Event",
+        "FTA",
+        "CSA"
+      ],
+      "FileName": "ni-frc-2025-base-suite_25.0.0.49156-0+f4_offline.iso",
+      "Uri": "https://download.ni.com/support/nipkg/products/ni-f/ni-frc-2025-base-suite/25.0/offline/ni-frc-2025-base-suite_25.0.0.49156-0+f4_offline.iso",
+      "Hash": "5b8f9d06aa175563c6d31d7cbfa8c60c",
+      "Platform": "Windows"
+    },
+    {
+      "Name": "NI CompactRIO Driver",
+      "Description": "cRIO Driver - Rarely used, but can be helpful for recovering roboRIOs",
+      "Tags": [
+        "FTA",
+        "CSA"
+      ],
+      "FileName": "ni-compactrio-device-drivers_24.0.0.49260-0+f108_offline.iso",
+      "Uri": "https://download.ni.com/support/nipkg/products/ni-c/ni-compactrio-device-drivers/24.0/offline/ni-compactrio-device-drivers_24.0.0.49260-0+f108_offline.iso",
+      "Hash": "a76eef4d5d81d9f01a1c2ea860ba170a",
+      "Platform": "Windows"
+    },
+    {
+      "Name": "WPILibInstaller Windows64",
+      "Description": "WPILib Installer",
+      "Tags": [
+        "Event",
+        "Team",
+        "CSA"
+      ],
+      "FileName": "WPILib_Windows-2025.2.1.iso",
+      "Uri": "https://packages.wpilib.workers.dev/installer/v2025.2.1/Win64/WPILib_Windows-2025.2.1.iso",
+      "Hash": "05e977b48854a2ececa4aae54849bdae",
+      "Platform": "Windows"
+    },
+    {
+      "Name": "WPILib VS Code",
+      "Description": "WPILib Installer can source a specific VSCode version if needed.",
+      "Tags": [
+        "Event",
+        "Team",
+        "CSA"
+      ],
+      "FileName": "VSCode-1.96.2-Windows.zip",
+      "Uri": "https://update.code.visualstudio.com/1.96.2/win32-x64-archive/stable",
+      "Hash": "bbd8d51067b5f3a06041d88f74ed3a4b",
+      "Platform": "Windows"
+    },
+    {
+      "Name": "Season Password",
+      "Description": "WPILib Installer",
+      "Tags": [
+        "Event",
+        "Team",
+        "FTA",
+        "CSA"
+      ],
+      "FileName": "2025Password.txt",
+      "Uri": "https://raw.githubusercontent.com/JamieSinn/CSA-USB-Tool/main/2025Password.txt",
+      "Hash": "035e077ac662be31f3138fe6a8148103",
+      "Platform": "Windows"
+    },
+    {
+      "Name": "CTRE Phoenix",
+      "Description": "Phoenix 6 Offline Installer - Contains all data/supporting tools.",
+      "Tags": [
+        "Event",
+        "Team",
+        "FTA",
+        "CSA"
+      ],
+      "FileName": "Phoenix-Offline_v25.2.2.exe",
+      "Uri": "https://github.com/CrossTheRoadElec/Phoenix-Releases/releases/download/v25.2.2/Phoenix-Offline_v25.2.2.exe",
+      "Hash": "4d3983ba6a76a7639f4e0f155915878d",
+      "Platform": "Windows"
+    },
+    {
+      "Name": "VH-109 Network Assistant",
+      "Description": "Vivid Hosting Network Assitant Tool",
+      "Tags": [
+        "Event",
+        "Team",
+        "FTA",
+        "CSA"
+      ],
+      "FileName": "vh_network_assistant.zip",
+      "Uri": "https://4239402461-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FzaDthb1gXvbj84qIfOUE%2Fuploads%2FJH9mvCiIVx33X8PlpHVK%2Fvh_network_assistant.zip?alt=media&token=a461c2fb-7fa0-4023-9264-ebcfeca0561c",
+      "Hash": "9528237b54bf36f55ce98c72f9ed7628",
+      "Platform": "Windows"
+    },
+    {
+      "Name": "VH-109 Firmware 1.2.9 for pre 1.2.0",
+      "Description": "Vivid Hosting Firmware to be used with VH-109 reporting no version (i.e. < 1.2.0)",
+      "Tags": [
+        "Event",
+        "Team",
+        "FTA",
+        "CSA"
+      ],
+      "FileName": "VH-109_1.2.9-02082025.img.enc",
+      "Uri": "https://4239402461-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FzaDthb1gXvbj84qIfOUE%2Fuploads%2FwewHEZeJhObzkVDsOikS%2FVH-109_1.2.9-02082025.img.enc?alt=media&token=bf810311-e6b2-41d0-b274-d578008752fa",
+      "Hash": "59e8e40a111db80a985b09c2e8628520",
+      "Platform": null
+    },
+    {
+      "Name": "VH-109 Firmware 1.2.9 for 1.2.0+",
+      "Description": "Vivid Hosting Firmware to be used with VH-109 reporting versions >= 1.2.0",
+      "Tags": [
+        "Event",
+        "Team",
+        "FTA",
+        "CSA"
+      ],
+      "FileName": "VH-109_1.2.9-02082025.FROM_1_2_X.img.enc",
+      "Uri": "https://4239402461-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FzaDthb1gXvbj84qIfOUE%2Fuploads%2Fdag77rCmDu2RIMSp2d5q%2FVH-109_1.2.9-02082025.FROM_1_2_X.img.enc?alt=media&token=3df60238-c4c2-4ca1-bceb-1a875c56ff85",
+      "Hash": "fcd3d76e288c2af87917e52b548f3994",
+      "Platform": null
+    },
+    {
+      "Name": "2025 Game Manual",
+      "Description": "Season ",
+      "Tags": [
+        "Event",
+        "Team",
+        "FTA",
+        "CSA"
+      ],
+      "FileName": "2025GameManual.pdf",
+      "Uri": "https://firstfrc.blob.core.windows.net/frc2025/Manual/2025GameManual.pdf",
+      "Hash": null,
+      "Platform": null
+    },
+    {
+      "Name": "NavX Libraries",
+      "Description": "NavX Libraries for the MXP version.",
+      "Tags": [
+        "Event",
+        "Team",
+        "CSA"
+      ],
+      "FileName": "navx-mxp.zip",
+      "Uri": "https://www.kauailabs.com/public_files/navx-mxp/navx-mxp.zip",
+      "Hash": null,
+      "Platform": null
+    },
+    {
+      "Name": "REV Hardware Client",
+      "Description": "REV Hardware Client w/ FRC firmware.",
+      "Tags": [
+        "Event",
+        "Team",
+        "CSA"
+      ],
+      "FileName": "REV-Hardware-Client-Setup-1.6.4-offline-FRC-2024-02-17.exe",
+      "Uri": "https://github.com/REVrobotics/REV-Software-Binaries/releases/download/rhc-1.6.4/REV-Hardware-Client-Setup-1.6.4-offline-FRC-2024-02-17.exe",
+      "Hash": "c03a4fcf1baafef68bf40db626125aee",
+      "Platform": "Windows"
+    },
+    {
+      "Name": "REV Hardware Client",
+      "Description": "REV Hardware Client w/ FRC firmware.",
+      "Tags": [
+        "Event",
+        "Team",
+        "CSA"
+      ],
+      "FileName": "REV-Hardware-Client-Setup-1.6.4-offline-FRC-2024-02-17.exe",
+      "Uri": "https://github.com/REVrobotics/REV-Software-Binaries/releases/download/rhc-1.6.4/REV-Hardware-Client-Setup-1.6.4-offline-FRC-2024-02-17.exe",
+      "Hash": "c03a4fcf1baafef68bf40db626125aee",
+      "Platform": "Windows"
+    }
+  ]
+}
